@@ -31,6 +31,7 @@ namespace ForwardList
         }
 
         // methods
+        // adding elements
         public void push_back(int Data)
         {
             if (Head == null) push_front(Data);
@@ -45,7 +46,6 @@ namespace ForwardList
             }
         }
 
-        // adding elements
         public void push_front(int Data)
         {
             Head = new Element(Data, Head);
@@ -82,8 +82,6 @@ namespace ForwardList
                 Size++;
             }
         }
-
-
 
         // removing elements
         public void pop_front() 
