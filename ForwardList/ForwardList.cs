@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ForwardList
 {
-    internal class ForwardList
+    internal class ForwardList:IEnumerable
     {
         Element Head;
         public uint Size { get; private set; }
+        public IEnumerator GetEnumerator() => new Enumerator(Head);
+        public void Add(int Data) => push_back(Data);
         
         //constructor
         public ForwardList()
@@ -117,9 +120,6 @@ namespace ForwardList
                 Temp.pNext = Temp.pNext.pNext;
                 Size--;
             }
-            
-
-
         }
         
 

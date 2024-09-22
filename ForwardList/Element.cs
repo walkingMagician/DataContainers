@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,8 @@ namespace ForwardList
     {
         public int Data { get; set; } // значение
         public Element pNext { get; set; } // следующий элемент
-    
+        
+
         // constructor
         public Element(int Data, Element pNext = null)
         {
