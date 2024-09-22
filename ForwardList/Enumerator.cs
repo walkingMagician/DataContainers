@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ForwardList
 {
-    internal class Enumerator:IEnumerator
+    internal class Enumerator<T>:IEnumerator
     {
-        Element Head { get; set; }
-        public Element Temp { get; set; }
-        public Enumerator(Element Head = null)
+        Element<T> Head { get; set; }
+        public Element<T> Temp { get; set; }
+        public Enumerator(Element<T> Head = null)
         {
             this.Head = Head;
             this.Temp = null;

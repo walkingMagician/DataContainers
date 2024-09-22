@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ForwardList
 {
-    internal class ForwardList:IEnumerable
+    internal class ForwardList<T>:IEnumerable
     {
-        Element Head;
+        Element<T> Head;
         public uint Size { get; private set; }
-        public IEnumerator GetEnumerator() => new Enumerator(Head);
-        public void Add(int Data) => push_back(Data);
+        public IEnumerator GetEnumerator() => new Enumerator<T>(Head);
+        public void Add(T Data) => push_back(Data);
         
         //constructor
         public ForwardList()
@@ -35,23 +35,23 @@ namespace ForwardList
 
         // methods
         // adding elements
-        public void push_back(int Data)
+        public void push_back(T Data)
         {
             if (Head == null) push_front(Data);
             else
             {
-                Element Temp = Head;
+                Element<T> Temp = Head;
                 while (Temp.pNext != null)
                     Temp = Temp.pNext;
-                Element New = new Element(Data);
+                Element<T> New = new Element<T>(Data);
                 Temp.pNext = New;
                 Size++;
             }
         }
 
-        public void push_front(int Data)
+        public void push_front(T Data)
         {
-            Head = new Element(Data, Head);
+            Head = new Element<T>(Data, Head);
 
             /*
             // 1) создаём новый элемент 
@@ -66,18 +66,18 @@ namespace ForwardList
             Size++;
         }
 
-        public void insert(int Data, int Index)
+        public void insert(T Data, int Index)
         {
             if (Index > Size) return;
             if (Index == 0) push_front(Data);
             else
             {// 1) доходим до нужного элемента  
-                Element Temp = Head;
+                Element<T> Temp = Head;
                 for (int i = 0; i < Index - 1; i++)
                     Temp = Temp.pNext;
 
                 // 2) создаём новый элемент
-                Element New = new Element(Data);
+                Element<T> New = new Element<T>(Data);
 
                 // 3) включаем элемент в список 
                 New.pNext = Temp.pNext;
@@ -101,7 +101,7 @@ namespace ForwardList
             {
 
 
-                Element Temp = Head;
+                Element<T> Temp = Head;
                 while (Temp.pNext.pNext != null)
                     Temp = Temp.pNext;
                 Temp.pNext = null;
@@ -115,7 +115,7 @@ namespace ForwardList
             if (Index == 0) pop_front();
             else
             {
-                Element Temp = Head;
+                Element<T> Temp = Head;
                 for(int i = 0;i < Index - 1;i++)    Temp = Temp.pNext;
                 Temp.pNext = Temp.pNext.pNext;
                 Size--;
@@ -125,7 +125,7 @@ namespace ForwardList
 
         public void print()
         { 
-            Element Temp = Head; // temp - итератор
+            Element<T> Temp = Head; // temp - итератор
             // итератор - это указатель про помощи которого можно получить доступ к структуры данных
             while (Temp != null)
             {
