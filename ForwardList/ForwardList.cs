@@ -48,6 +48,9 @@ namespace ForwardList
         // adding elements
         public void push_front(int Data)
         {
+            Head = new Element(Data, Head);
+
+            /*
             // 1) создаём новый элемент 
             Element New = new Element(Data);
 
@@ -56,6 +59,7 @@ namespace ForwardList
 
             // 3) смещаем голову на новый элемент 
             Head = New;
+            */
             Size++;
         }
 
@@ -104,6 +108,21 @@ namespace ForwardList
             }
         }
 
+        public void erase(int Index)
+        {
+            if (Index > Size) return;
+            if (Index == 0) pop_front();
+            else
+            {
+                Element Temp = Head;
+                for(int i = 0;i < Index - 1;i++)    Temp = Temp.pNext;
+                Temp.pNext = Temp.pNext.pNext;
+                Size--;
+            }
+            
+
+
+        }
         
 
         public void print()
