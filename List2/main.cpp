@@ -48,7 +48,7 @@ public:
 	}
 
 	// methods List
-	void push_front(int Data) // добавлеине в начало
+	void push_front(int Data) // добавлеине элиментка в начало списка
 	{
 		if (Head == nullptr && Tail == nullptr)
 		{
@@ -65,7 +65,7 @@ public:
 		}
 	}
 
-	void push_back(int Data) // добавление в конец
+	void push_back(int Data) // добавление элимента в конец в список
 	{
 		if (Head == nullptr && Tail == nullptr) push_front(Data);
 		else
@@ -78,7 +78,7 @@ public:
 		}
 	}
 
-	void insert(int Data, int Index) // добавление значения по индексу
+	void insert(int Data, int Index) // добавление элимента по индексу в списке
 	{
 		if (Index > size) return;
 		else if (Index == 0) push_front(Data);
@@ -90,49 +90,49 @@ public:
 			
 			Element* New = new Element(Data);
 			
-			New->pNext = Temp->pNext;
-			Temp->pNext = New;
-			New->pPrev = Temp->pPrev;
-			Temp->pPrev = New;
+			New->pNext = Temp->pNext; // присоединяемся к переду
+			Temp->pNext = New; // перед присоединяем к списку
+			New->pPrev = Temp->pPrev; // список присоединяем к заду
+			Temp->pPrev = New; // зад присоединяется к списку
 			size++;
 		}
 	}
 
-	void pop_front() // удаление в начале
+	void pop_front() // удаление элимента в начале спика
 	{
 		//Head = Head->pNext;
-		Element* Temp = Head = Head->pNext;
-		Temp->pPrev = NULL;
+		Element* Temp = Head = Head->pNext; // temp и head сдвигаем на следующию голову
+		Temp->pPrev = NULL; // искоючаем ненужный элимент
 		size--;
 	}
 
-	void pop_back() // удаление в конце 
+	void pop_back() // удаление в конце списка
 	{
-		if (Head == nullptr && Tail == nullptr) return;
-		else if (Head->pNext == nullptr) pop_front();
+		if (Head == nullptr && Tail == nullptr) return; // если пуст то нечего
+		else if (Head->pNext == nullptr) pop_front(); // если следующий элемент от головы пуст то активируем функцию pop_front()
 		else 
 		{
-			Element* Temp = Tail = Tail->pPrev;
-			Temp->pNext = NULL;
+			Element* Temp = Tail = Tail->pPrev; // temp и tail сдвигаем на предыдущий хвост
+			Temp->pNext = NULL; // исключаем из списка
 			size--;
 		}
 	}
 
-	void erase(int Index) // удаление по индексу
+	void erase(int Index) // удаление элимента по индексу в списке
 	{
-		if (Index > size) return;
-		else if (Index == size) pop_back();
-		else if (Index == 0) pop_front();
+		if (Index > size) return; // нечего 
+		else if (Index == size) pop_back(); // если индекс = длине то активируем фуекцию pop_back()
+		else if (Index == 0) pop_front(); // если индекс = 0 то активируем функцию pop_front()
 		else
 		{
 			Element* Temp = Head;
-			for (int i = 0; i < Index - 1; i++)
+			for (int i = 0; i < Index - 1; i++) // идём до нужного элимента
 				Temp = Temp->pNext;
 			
-			Element* TempN = Temp->pNext;
-			Element* TempP = Temp->pPrev;
-			Temp = nullptr;
-			TempP->pNext = TempN;
+			Element* TempN = Temp->pNext; // TempN сдвинут к следующему элименту от temp
+			Element* TempP = Temp->pPrev; // TempP сдвинут к предыдущему элименту от temp
+			Temp = nullptr; // исключаем элимент из списка
+			TempP->pNext = TempN; // связываем tempN и tempP
 			TempN->pPrev = TempP;
 			size--;
 			
