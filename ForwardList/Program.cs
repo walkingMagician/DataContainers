@@ -1,4 +1,4 @@
-﻿//#define HOME
+﻿#define HOME
 using System;
 using System.Collections.Generic;
 using System.Collections;
@@ -21,6 +21,7 @@ namespace ForwardList
             { 
                 list.push_back(rand.Next(100));
             }
+            list.push_back(123);
             list.print();
 
             //Console.Write("Введите индекс добавляемого элемента: ");
@@ -32,13 +33,13 @@ namespace ForwardList
             //list.push_front(456);
 #endif
 
-            ForwardList new_list = new ForwardList() { 3, 5, 8, 13, 21, 45, 12, 45, 155 };
+            /*ForwardList new_list = new ForwardList() { 3, 5, 8, 13, 21, 45, 12, 45, 155 };
             //new_list.print();
             foreach (int i in new_list)
             {
                 Console.Write(i + "\t");
             }
-            Console.WriteLine();
+            Console.WriteLine();*/
         }
     }
 }
