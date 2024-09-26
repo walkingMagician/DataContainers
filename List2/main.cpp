@@ -22,9 +22,6 @@ class List
 		}
 		~Element() // Destructor
 		{
-			delete pNext;
-			delete pPrev;
-			//delete new::List;
 			cout << "Edestructor:\t" << this << endl;
 		}
 		friend class List;
@@ -42,9 +39,14 @@ public:
 	}
 	~List() // Destructor
 	{
-		//delete Head;
-		//delete Tail;
-		cout << "Ldestructor:\t" << this << endl;
+		Element* current = Head;
+		while (current)
+		{
+			Element* Temp = current; // временный элимент который равен итератору
+			current = current->pNext; // переходим к след элименту
+			delete Temp; // освобождаем память
+			cout << "Ldestructor:\t" << this << endl;
+		}
 	}
 
 	// methods List
