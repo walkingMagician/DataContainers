@@ -48,7 +48,7 @@ public:
 	}
 	List(std::initializer_list<T> Value):List()
 	{
-		for (auto i : Value) Adding(Value);
+		for (T i : Value) Adding(i);
 		cout << "LConstructor2:\t" << this << endl;
 	}
 	~List() // Destructor
@@ -66,7 +66,7 @@ public:
 	// methods List
 	void push_front(T Data) // добавлеине элиментка в начало списка
 	{
-		if (Head == nullptr && Tail == nullptr)
+		if (Head == NULL && Tail == NULL)
 		{
 			Head = Tail = new Element<T>(Data);
 			size++;
@@ -159,7 +159,7 @@ public:
 	void Adding(T Data)
 	{
 		Element<T>* New = new Element<T>(Data);
-		if (Head == nullptr) 
+		if (Head == NULL) 
 		{
 			Head = New; 
 			Tail = New;
@@ -197,6 +197,8 @@ public:
 };
 
 
+
+
 int main()
 {
 	setlocale(LC_ALL, "");
@@ -204,7 +206,7 @@ int main()
 #ifdef WORK
 	int n;
 	cout << "Введите размер списка: "; cin >> n;
-	List list;
+	List<int> list;
 	for (int i = 0; i < n; i++) list.push_front(rand() % 100);
 	list.print();
 	
@@ -220,6 +222,8 @@ int main()
 #endif
 	
 
+	//List<int> list = {};
+	//List<int> list = {3};
 	List<int> list = { 3, 5, 8, 13, 21 };
 	list.print();
 	/*for (int i : list)
