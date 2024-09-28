@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <initializer_list>
+#include <vector>
 using std::cout;
 using std::cin;
 using std::endl;
@@ -29,10 +30,10 @@ class List
 		{
 			
 			cout << "Edestructor:\t" << this << endl;
-		}
+		}		
 		friend class List;
 	}; // обьявления головы и хвоста, указатели на обьект класса element 
-
+	
 	Element<T>* Head;
 	Element<T>* Tail;
 
@@ -43,12 +44,12 @@ public:
 	List()
 	{
 		Head = Tail = nullptr;
-		size = 0;
+		size = 0; 
 		cout << "LConstructor:\t" << this << endl;
 	}
-	List(std::initializer_list<T> Value):List()
+	List(std::initializer_list<T> List) :List()
 	{
-		for (T i : Value) Adding(i);
+		for (T i: List) Adding(i);
 		cout << "LConstructor2:\t" << this << endl;
 	}
 	~List() // Destructor
@@ -199,7 +200,7 @@ public:
 
 
 
-void main()
+int main()
 {
 	setlocale(LC_ALL, "");
 	
@@ -226,13 +227,13 @@ void main()
 	//List<int> list = {3};
 	List<int> list = { 3, 5, 8, 13, 21 };
 	list.print();
-
-	/*
-	for (int i : list)
-	{
-		cout << i << TAB;
-	}
-	cout << endl;
 	
-	*/
+
+	/*for (auto i : list)
+	{
+		cout << i << endl;
+	}
+	cout << endl;*/
+	
+	return 0;
 }
