@@ -169,8 +169,8 @@ public:
 			Tail->pNext = New;
 			New->pPrev = Tail;
 			Tail = New;
-			size++;
 		}
+			size++;
 	}
 
 	void print()const
@@ -199,7 +199,7 @@ public:
 
 
 
-int main()
+void main()
 {
 	setlocale(LC_ALL, "");
 	
@@ -226,11 +226,13 @@ int main()
 	//List<int> list = {3};
 	List<int> list = { 3, 5, 8, 13, 21 };
 	list.print();
-	
-	/*for (int i : list)
+
+	/*
+	for (int i : list)
 	{
 		cout << i << TAB;
 	}
-	cout << endl;*/
-	return 0;
+	cout << endl;
+	
+	*/
 }
