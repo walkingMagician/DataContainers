@@ -256,7 +256,7 @@ int main()
 	//List<int> list = {3};
 	List<int> list = { 3, 5, 8, 13, 21 };
 
-	//list.print();
+	list.print();
 	//cout << list;
 
 	/*for (auto i : list)
