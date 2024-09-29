@@ -50,7 +50,7 @@ public:
 	}
 	List(std::initializer_list<T> init) :List()
 	{
-		for (T i: init) Adding(i);
+		for (auto i: init) Adding(i);
 		cout << "LConstructor2:\t" << this << endl;
 	}
 	~List() // Destructor
@@ -167,14 +167,15 @@ public:
 		{
 			Head = New; 
 			Tail = New;
+			_size++;
 		}
 		else
 		{
 			Tail->pNext = New; // присоединение к хвосту и сдвиг хвоста
 			New->pPrev = Tail;
 			Tail = New;
-		}
 			_size++;
+		}
 	}
 
 	void print()const
@@ -200,7 +201,29 @@ public:
 	}
 
 	//methods LIST
+	/*T begin() const
+	{
+		return Head;
+	}
+	T end() const
+	{
+		return Tail;
+	}
+	size_t size() const
+	{
+		return _size;
+	}
 
+	std::ostream& operator <<(std::ostream& os)
+	{
+		auto current = begin();
+		while (current)
+		{
+			os << current->Element::Data << TAB;
+			current = current->Element::pNext;
+		}
+		return os;
+	}*/
 };
 
 
@@ -232,14 +255,15 @@ int main()
 	//List<int> list = {};
 	//List<int> list = {3};
 	List<int> list = { 3, 5, 8, 13, 21 };
+
 	//list.print();
 	//cout << list;
 
-	for (auto i : list)
+	/*for (auto i : list)
 	{
 		cout << i << endl;
 	}
-	cout << endl;
+	cout << endl;*/
 	
 	return 0;
 }
