@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <initializer_list>
+#include <memory>
 #include <vector>
 using std::cout;
 using std::cin;
@@ -22,7 +23,7 @@ class List
 
 	public:
 		// Constructor
-		Element(Y Data, Element* pNext = nullptr, Element* pPrev = nullptr) :Data(Data), pNext(pNext), pPrev(pPrev)
+		Element(Y Data, Element<Y>* pNext = nullptr, Element<Y>* pPrev = nullptr) :Data(Data), pNext(pNext), pPrev(pPrev)
 		{
 			cout << "Econstructor:\t " << this << endl;
 		}
@@ -37,19 +38,19 @@ class List
 	Element<T>* Head;
 	Element<T>* Tail;
 
-	size_t size; // кол-во элементов в списке 
+	size_t _size; // кол-во элементов в списке 
 
 public:
 	// Constructor
 	List()
 	{
 		Head = Tail = nullptr;
-		size = 0; 
+		_size = 0; 
 		cout << "LConstructor:\t" << this << endl;
 	}
-	List(std::initializer_list<T> List) :List()
+	List(std::initializer_list<T> init) :List()
 	{
-		for (T i: List) Adding(i);
+		for (T i: init) Adding(i);
 		cout << "LConstructor2:\t" << this << endl;
 	}
 	~List() // Destructor
@@ -64,13 +65,15 @@ public:
 		cout << "Ldestructor:\t" << this << endl;
 	}
 
+	
+
 	// methods List
 	void push_front(T Data) // добавлеине элиментка в начало списка
 	{
 		if (Head == NULL && Tail == NULL)
 		{
 			Head = Tail = new Element<T>(Data);
-			size++;
+			_size++;
 		}
 		else
 		{
@@ -78,7 +81,7 @@ public:
 			New->pNext = Head; // присоединяем элемент к списку 
 			Head->pPrev = New; // присоединяем список к элементу 
 			Head = New; // смещаем голову на новый элемент 
-			size++;
+			_size++;
 		}
 	}
 
@@ -91,13 +94,13 @@ public:
 			New->pPrev = Tail; // присоединяемся к хвосту
 			Tail->pNext = New; // хвост присоединяем к новому списку
 			Tail = New; // сдвигаем хвост
-			size++;
+			_size++;
 		}
 	}
 
 	void insert(T Data, int Index) // добавление элимента по индексу в списке
 	{
-		if (Index > size) return;
+		if (Index > _size) return;
 		else if (Index == 0) push_front(Data);
 		else
 		{
@@ -111,7 +114,7 @@ public:
 			Temp->pNext = New; // перед присоединяем к списку
 			New->pPrev = Temp->pPrev; // список присоединяем к заду
 			Temp->pPrev = New; // зад присоединяется к списку
-			size++;
+			_size++;
 		}
 	}
 
@@ -120,7 +123,7 @@ public:
 		//Head = Head->pNext;
 		Element<T>* Temp = Head = Head->pNext; // temp и head сдвигаем на следующию голову
 		Temp->pPrev = NULL; // искоючаем ненужный элимент
-		size--;
+		_size--;
 	}
 
 	void pop_back() // удаление в конце списка
@@ -131,14 +134,14 @@ public:
 		{
 			Element<T>* Temp = Tail = Tail->pPrev; // temp и tail сдвигаем на предыдущий хвост
 			Temp->pNext = NULL; // исключаем из списка
-			size--;
+			_size--;
 		}
 	}
 
 	void erase(int Index) // удаление элимента по индексу в списке
 	{
-		if (Index > size) return; // нечего 
-		else if (Index == size) pop_back(); // если индекс = длине то активируем фуекцию pop_back()
+		if (Index > _size) return; // нечего 
+		else if (Index == _size) pop_back(); // если индекс = длине то активируем фуекцию pop_back()
 		else if (Index == 0) pop_front(); // если индекс = 0 то активируем функцию pop_front()
 		else
 		{
@@ -151,7 +154,7 @@ public:
 			Temp = nullptr; // исключаем элимент из списка
 			TempP->pNext = TempN; // связываем tempN и tempP
 			TempN->pPrev = TempP;
-			size--;
+			_size--;
 			
 		}
 	}
@@ -167,11 +170,11 @@ public:
 		}
 		else
 		{
-			Tail->pNext = New;
+			Tail->pNext = New; // присоединение к хвосту и сдвиг хвоста
 			New->pPrev = Tail;
 			Tail = New;
 		}
-			size++;
+			_size++;
 	}
 
 	void print()const
@@ -182,7 +185,7 @@ public:
 			cout << Temp->pPrev << TAB << Temp << TAB << Temp->Data << TAB << Temp->pNext << endl;
 		}
 		cout << "Tail:\t" << Tail << endl;
-		cout << "кол-во элементов списка: " << size << endl;
+		cout << "кол-во элементов списка: " << _size << endl;
 	}
 
 	void revers_print()
@@ -193,8 +196,11 @@ public:
 			cout << Temp->pPrev << TAB << Temp << TAB << Temp->Data << TAB << Temp->pNext << endl;
 		}
 		cout << "Head:\t" << Head << endl;
-		cout << "кол-во элементов списка: " << size << endl;
+		cout << "кол-во элементов списка: " << _size << endl;
 	}
+
+	//methods LIST
+
 };
 
 
@@ -226,14 +232,14 @@ int main()
 	//List<int> list = {};
 	//List<int> list = {3};
 	List<int> list = { 3, 5, 8, 13, 21 };
-	list.print();
-	
+	//list.print();
+	//cout << list;
 
-	/*for (auto i : list)
+	for (auto i : list)
 	{
 		cout << i << endl;
 	}
-	cout << endl;*/
+	cout << endl;
 	
 	return 0;
 }
