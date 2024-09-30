@@ -4,7 +4,7 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-#define tab "\t"
+#define TAB "\t"
 #define delimiter "\n----------------------------\n"
 
 class List
@@ -279,7 +279,7 @@ public:
 		size++;
 	}
 
-	// Removing elements:
+	// Removing elements
 	void pop_front()
 	{
 		if (Head == Tail)
@@ -303,12 +303,37 @@ public:
 		size--;
 	}
 
+	void erase(int Index)
+	{
+		Element* Temp;
+		if (Index == 0) return pop_front();
+		if (Index == size - 1) return pop_back();
+		if (Index >= size) throw std::exception("erase: Out of range exception");
+		if (Index < size / 2)
+		{
+			Temp = Head;
+			for (int i = 0; i < Index; i++) Temp = Temp->pNext;
+		}
+		else
+		{
+			Temp = Tail;
+			for (int i = 0; i < size - Index - 1; i++) Temp = Temp->pPrev;
+		}
+		Element* TempN = Temp->pNext;
+		Element* TempP = Temp->pPrev;
+		Temp = nullptr;
+		delete Temp;
+		TempP->pNext = TempN;
+		TempN->pPrev = TempP;
+		size--;
+	}
+
 	// Methods:
 	void print()const
 	{
 		cout << "Head:\t" << Head << endl;
 		for (Element* Temp = Head; Temp; Temp = Temp->pNext)
-			cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
+			cout << Temp->pPrev << TAB << Temp << TAB << Temp->Data << TAB << Temp->pNext << endl;
 		cout << "Tail:\t" << Tail << endl;
 		cout << "Количество элементов списка: " << size << endl;
 	}
@@ -316,7 +341,7 @@ public:
 	{
 		cout << "Tail:\t" << Tail << endl;
 		for (Element* Temp = Tail; Temp; Temp = Temp->pPrev)
-			cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
+			cout << Temp->pPrev << TAB << Temp << TAB << Temp->Data << TAB << Temp->pNext << endl;
 		cout << "Head:\t" << Head << endl;
 		cout << "Количество элементов списка: " << size << endl;
 	}
@@ -396,18 +421,20 @@ void main()
 	cout << endl;
 #endif // ITERATORS_CHECK
 
+	
 	List list1 = { 3, 5, 8, 13, 21 };
 	List list2 = { 34, 55, 89 };
 	List list3 = list1 + list2;
-	for (int i : list1)cout << i << tab; cout << endl;
-	for (int i : list2)cout << i << tab; cout << endl;
-	for (int i : list3)cout << i << tab; cout << endl;
+	for (int i : list1)cout << i << TAB; cout << endl;
+	for (int i : list2)cout << i << TAB; cout << endl;
+	for (int i : list3)cout << i << TAB; cout << endl;
 
 	for (List::Iterator it = list1.begin(); it != list1.end(); ++it)
 	{
 		*it *= 10;
 	}
-	for (int i : list1)cout << i << tab; cout << endl;
+	for (int i : list1)cout << i << TAB; cout << endl;
+	
 
 
 }
