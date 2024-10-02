@@ -27,7 +27,7 @@ class List
 		{
 			cout << "EDestructor:\t" << this << endl;
 		}
-		friend class List;
+		friend class List; 
 	};
 	Element<T>* Head; 
 	Element<T>* Tail;	//Объявляем два указателя на объекты класса 'Element' непосредственно после описания класса;
