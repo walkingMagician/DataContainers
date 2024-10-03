@@ -5,7 +5,7 @@ using std::cout;
 using std::endl;
 
 #define TAB "\t"
-#define delimiter "\n----------------------------\n"
+#define delimiter "\n------------------------------------------------\n"
 
 template <typename T >
 class List
@@ -367,7 +367,8 @@ List<T> operator+(const List<T>& left, const List<T>& right)
 //#define BASE_CHECK
 //#define ITERATORS_CHECK
 
-int main()
+
+void main()
 {
 	setlocale(LC_ALL, "");
 
@@ -432,16 +433,23 @@ int main()
 	for (int i : list2)cout << i << TAB; cout << endl;
 	for (int i : list3)cout << i << TAB; cout << endl;
 
-	/*for (List<int>::Iterator<int> it = list1.begin(); it != list1.end(); ++it)
+	for (List<int>::Iterator<int> it = list1.begin(); it != list1.end(); ++it)
 	{
 		*it *= 10;
-	}*/
+	}
+	for (int i : list1)cout << i << TAB; cout << endl;
+	cout << delimiter;
 
 	List<double> list4 = {2.4, 5.4, 3.8, 3.5 };
 	for (double i : list4)cout << i << TAB; cout << endl;
+	cout << delimiter;
+
 	List<std::string> list5 = {"ах", "ты", "ж", "ёжкин", "т", "20"};
 	for (std::string i : list5)cout << i << TAB; cout << endl;
+	cout << delimiter;
 	
+	List<char> list6 = { 'A', 'B', 'C', 'D', 'E'};
+	for (char i : list6)cout << i << TAB; cout << endl;
+	cout << delimiter;
 
-	return 0;
 }
