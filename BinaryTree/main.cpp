@@ -40,19 +40,82 @@ public:
 	}
 	~Tree()
 	{
+		Clear();
 		cout << "Tdestructor:\t" << this << endl;
 	}
 
+	void Clear()
+	{
+		Clear(Root);
+		Root = nullptr;
+	}
+
+	void insert(int Data)
+	{
+		return insert(Data, Root);
+	}
+
+	int maxValue() const
+	{
+		return maxValue(Root);
+	}
+
+	int minValue() const
+	{
+		return minValue(Root);
+	}
+
+	int Count()
+	{
+		return Count(Root);
+	}
+
+	int Sum()
+	{
+		return Sum(Root);
+	}
+
+	double Avg()
+	{
+		return (double)Sum() / Count();
+	}
+
+	int Derth()
+	{
+		return Derth(Root);
+	}
+
+	Element* Balance()
+	{
+		return Balance(Root);
+	}
+
+	void print() const
+	{
+		print(Root);
+		cout << endl;
+	}
+
+private:
+
 	// methods 
+	// стирание ветвей дерева
+	void Clear(Element* Root)
+	{
+		if (Root == nullptr) return;
+		Clear(Root->pLeft);
+		Clear(Root->pRight);
+		delete Root;
+	}
+
 	void insert(int Data, Element* Root)
 	{
 		if (this->Root == nullptr) this->Root = new Element(Data);
 		if (Root == nullptr) return;
-		if (Data == Root->Data) return;
 		if (Data < Root->Data)
 		{
 			if (Root->pLeft == nullptr) Root->pLeft = new Element(Data);
-			else insert(Data, Root->pRight);
+			else insert(Data, Root->pLeft);
 		}
 		else
 		{
@@ -61,7 +124,13 @@ public:
 		}
 	}
 
-	// Функция для обхода дерева и сбора элементов
+	int Derth(Element* Root)
+	{
+		int size = 0;
+		return size;
+	}
+
+	// функция для обхода дерева и сбора элементов в вектор
 	void AddTreeInVector(std::vector<int>& vector, Element* Root)
 	{
 		if (Root)
@@ -72,6 +141,7 @@ public:
 		}
 	}
 
+	// функци собирания из сортированного вектора в сортированное дерево 
 	Element* SortVectorTree(std::vector<int>& vector, int start, int end)
 	{
 		if (start > end) return nullptr;
@@ -85,7 +155,8 @@ public:
 		return Root;
 	}
 
-	Element* Balance(Element* Root)
+	// главная функция собирает всё вместе
+	Element* Balance(Element* Root) 
 	{
 		std::vector<int> vector;
 		AddTreeInVector(vector, Root);
@@ -95,29 +166,41 @@ public:
 	}
 
 	// Функция для нахождения максимального значения в дереве
-	int maxValue(Element* Root)
+	int maxValue(Element* Root)const
 	{
-		if (Root == nullptr) return INT_MIN;
-		return max(Root->Data, max(maxValue(Root->pLeft), maxValue(Root->pRight)));
+		if (Root == nullptr)throw std::exception("Error is maxValue: дерево пустое");
+		return Root->pRight ? maxValue(Root->pRight) : Root->Data;
 	}
 
 	// Функция для нахождения минимального значения в дереве
-	int minValue(Element* Root)
+	int minValue(Element* Root)const
 	{
-		if (Root == nullptr) return INT_MAX;
-		return min(Root->Data, min(minValue(Root->pLeft), minValue(Root->pRight)));
+		if (Root == nullptr)throw exception("Error is minValue: дерево пустое");
+		return Root->pLeft == nullptr ? Root->Data : minValue(Root->pLeft);
+		/*if (Root->pLeft == nullptr)return Root->Data;
+		else return minValue(Root->pLeft);*/
 	}
 
+	int Count(Element* Root) // кол-во элиментов дерева
+	{
+		if (Root == nullptr) return 0;
+		else return Count(Root->pLeft) + Count(Root->pRight) + 1;
+	}
+
+	int Sum(Element* Root) // сумма всех элиментов дерева
+	{
+		if (Root == nullptr) return 0;
+		else return Root->Data + Sum(Root->pLeft) + Sum(Root->pRight);
+	}
 
 	// methods displey
 	void print(Element* Root)const
 	{
 		if (Root == nullptr) return;
-		cout << Root->Data << tab;
 		print(Root->pLeft);
+		cout << Root->Data << tab;
 		print(Root->pRight);
 	}
-	
 
 };
 
@@ -125,29 +208,32 @@ void main()
 {
 	setlocale(LC_ALL, "");
 
+	try
+	{
 
-	int n;
-	cout << "n = "; cin >> n;
+		int n;
+		cout << "n = "; cin >> n;
 
-	Tree tree;
-	for (int i = 0; i < n; i++)
-		tree.insert(rand() % 100, tree.getRoot());
-	tree.print(tree.getRoot());
-	//cout << endl;
-	//cout << tree.minValue(tree.getRoot());
-	//cout << endl;
-	//tree.maxValue(tree.getRoot());
-	//cout << tree.max;
-	cout << endl;
+		Tree tree;
+		for (int i = 0; i < n; i++)
+			tree.insert(rand() % 100);
+		tree.print();
+		cout << tree.minValue() << endl;
+		cout << tree.maxValue() << endl;
+		cout << tree.Avg() << endl;
+		cout << tree.Count() << endl;
+		cout << tree.Sum() << endl;
+		//tree.Balance();
+		//tree.print();
+		cout << endl;
+		cout << endl;
 
-	/*tree.Balance(tree.getRoot());
-	tree.print(tree.getRoot());
-	cout << endl;
-	cout << tree.minValue(tree.getRoot());
-	cout << endl;
-	cout << tree.maxValue(tree.getRoot());*/
-	cout << endl;
+		cout << tree.Derth() << endl;
 
-
+	}
+	catch (exception ex)
+	{
+		cout << ex.what() << endl;
+	}
 
 }
