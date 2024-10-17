@@ -321,7 +321,6 @@ void main()
 		//tree.print();
 		cout << endl;
 
-		printLevelOrder(tree);
 
 		/*UniqueTree utree;
 		utree.insert(5);
