@@ -3,6 +3,10 @@
 #include <vector>
 #include <initializer_list>
 #include <ctime>
+#include <chrono>
+#include <functional>
+#include <iomanip>
+#include <queue>
 using namespace std;
 
 #define tab "\t";
@@ -17,7 +21,7 @@ class Tree
 		Element* pRight;
 	public:
 		Element(int Data, Element* pLeft = nullptr, Element* pRight = nullptr)
-			:Data(Data), pLeft(pLeft), pRight(pRight) 
+			:Data(Data), pLeft(pLeft), pRight(pRight)
 		{
 			//cout << "Econstructor:\t" << this << endl;
 		}
@@ -101,6 +105,19 @@ public:
 	Element* Balance()
 	{
 		return Balance(Root);
+	}
+
+	void time(std::function<void()> func)
+	{
+		// запоминаем текущее время перед выполнением блока кода
+		auto start = std::chrono::high_resolution_clock::now();
+		func();
+		// теперь запоминаем текущее время после выполнения кода
+		auto end = std::chrono::high_resolution_clock::now();
+		// вычисляем продолжительность
+		std::chrono::duration<double, std::milli> duration = end - start;
+		// вывод
+		std::cout << "Время выполнения: " << duration.count() << " миллисекунд" << std::endl;
 	}
 
 	void print() const
@@ -246,7 +263,6 @@ private:
 	friend class UniqueTree;
 };
 
-
 class UniqueTree :public Tree
 {
 	void insert(int Data, Element* Root)
@@ -272,6 +288,12 @@ public:
 };
 
 
+
+
+	/*clock_t start = clock();
+	clock_t end = clock();
+	cout << " время " << double(end - start) / CLOCKS_PER_SEC << " секунд\n";*/
+
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -291,14 +313,15 @@ void main()
 		cout << "размер дерева: " << tree.Count() << endl;
 		cout << "среднеарифметическое: " << tree.Avg() << endl;
 		cout << "сумма всех элиментов: " << tree.Sum() << endl;
-		clock_t start = clock();
 		cout << "глубина дерева: " << tree.Derth() << endl;
-		clock_t end = clock();
-		cout << " время " << double(end - start) / CLOCKS_PER_SEC << " секунд\n";
+		tree.time([&]() { tree.Derth(); });
+		//tree.time([&]() { tree.erase(50); });
 		//cout << "балансировка дерева: " << tree.Balance() << endl;
 		tree.erase(4);
 		//tree.print();
 		cout << endl;
+
+		printLevelOrder(tree);
 
 		/*UniqueTree utree;
 		utree.insert(5);
