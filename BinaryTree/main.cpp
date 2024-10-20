@@ -183,7 +183,7 @@ private:
 		}
 	}
 
-	int Derth(Element* Root)
+	int Derth(Element* Root) // глубина дерева
 	{
 		if (Root == nullptr) return 0;
 		int Left = Derth(Root->pLeft);
